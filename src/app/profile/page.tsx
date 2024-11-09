@@ -3,15 +3,21 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Archive } from "lucide-react"
 
-// First, add this interface above the component
 interface ArchiveItem {
   id: number;
   image: string;
   title: string;
 }
 
+interface BlogPost {
+  id: number;
+  title: string;
+  date: string;
+  image: string;
+  excerpt: string;
+}
+
 export default function ProfilePage() {
-  // Add this const inside the component
   const archiveItems: ArchiveItem[] = [
     {
       id: 1,
@@ -45,18 +51,48 @@ export default function ProfilePage() {
     }
   ];
 
+  const blogPosts: BlogPost[] = [
+    {
+      id: 1,
+      title: "My Homemade Pho Journey",
+      date: "March 15, 2024",
+      image: "/bpfood/bp1.png",
+      excerpt: "Discovering the art of perfect Pho making..."
+    },
+    {
+      id: 2,
+      title: "Mastering Asian Stir-Fry",
+      date: "March 12, 2024",
+      image: "/bpfood/bp2.png",
+      excerpt: "Essential techniques for the perfect wok-fired dishes..."
+    },
+    {
+      id: 3,
+      title: "Baking Sourdough Bread",
+      date: "March 10, 2024",
+      image: "/bpfood/bp3.png",
+      excerpt: "My adventures with natural fermentation and artisan bread..."
+    },
+    {
+      id: 4,
+      title: "Classic French Pastries",
+      date: "March 8, 2024",
+      image: "/bpfood/bp4.png",
+      excerpt: "Learning the delicate art of French patisserie..."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Banner Section */}
-      <div className="w-full h-48 bg-muted relative rounded-xl border border-gray-200 shadow-md mb-8"> {/* Added styling */}
+      <div className="w-full h-48 bg-muted relative rounded-xl border border-gray-200 shadow-md mb-8"> 
         <Image
           src="/banner.png"  
           alt="Profile banner"
           fill
-          className="object-cover rounded-xl" /* Added rounded corners to image */
+          className="object-cover rounded-xl"
         />
         <div className="absolute -bottom-16 left-8">
-          <div className="rounded-full border-8 border-background overflow-hidden shadow-lg"> {/* Added shadow */}
+          <div className="rounded-full border-8 border-background overflow-hidden shadow-lg"> 
             <Image
               src="/profile.png"
               alt="Profile picture"
@@ -69,14 +105,13 @@ export default function ProfilePage() {
       </div>
 
       {/* Profile Content */}
-      <div className="container mx-auto px-4 pt-20 pb-16 max-w-7xl"> {/* Added pb-16 and max-w-7xl */}
-        <div className="space-y-8"> {/* Increased space-y-6 to space-y-8 */}
-          {/* Biography Section */}
-          <div className="space-y-4 bg-white/50 p-6 rounded-lg"> {/* Added background and padding */}
-            <h1 className="text-3xl font-bold tracking-tight"> {/* Improved typography */}
+      <div className="container mx-auto px-4 pt-20 pb-16 max-w-7xl">
+        <div className="space-y-8"> 
+          <div className="space-y-4 bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent">
               Biography
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl"> {/* Improved readability */}
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl">
               Hi! I'm Hpung, a computer science student with a big love for cooking. 
               I enjoy trying out new recipes, experimenting with flavors, 
               and bringing friends together over a good meal. Excited to meet others who 
@@ -84,33 +119,75 @@ export default function ProfilePage() {
             </p>
           </div>
 
-          {/* Archive Section */}
-          <div className="space-y-6"> {/* Increased spacing */}
-            <div className="flex items-center gap-3 pb-2"> {/* Added pb-2 */}
-              <Archive className="w-6 h-6" /> {/* Increased icon size */}
-              <h2 className="text-2xl font-semibold tracking-tight">Archive</h2>
+          {/* New Grid Layout */}
+          <div className="grid grid-cols-12 gap-8 mt-8">
+            {/* Archive Section - Smaller */}
+            <div className="col-span-3 space-y-4">
+              <div className="flex items-center gap-3">
+                <Archive className="w-5 h-5" />
+                <h2 className="text-xl font-semibold">Archive</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {archiveItems.map((item) => (
+                  <Card key={item.id} className="overflow-hidden group cursor-pointer">
+                    <CardContent className="p-0 relative">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={200}
+                        height={150}
+                        className="w-full aspect-square object-cover transition-transform group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p className="text-white text-sm font-medium">{item.title}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> {/* Increased gap and adjusted breakpoints */}
-              {archiveItems.map((item) => (
-                <Card key={item.id} className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
-                  <CardContent className="p-0 relative">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      width={400}
-                      height={300}
-                      className="w-full aspect-[4/3] object-cover transition-transform group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <p className="text-white font-medium text-lg">{item.title}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+
+            {/* Blog Posts Section - Larger */}
+            <div className="col-span-9">
+              <h2 className="text-2xl font-semibold mb-6">Latest Posts</h2>
+              <div className="grid grid-cols-2 gap-6">
+                {blogPosts.map((post) => (
+                  <Card key={post.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-0">
+                      <div className="relative">
+                        <Image
+                          src={post.image}
+                          alt={post.title}
+                          width={600}
+                          height={400}
+                          className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      <div className="p-6 space-y-3">
+                        <h3 className="text-xl font-semibold group-hover:text-purple-600 transition-colors">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {post.date}
+                        </p>
+                        <p className="text-sm line-clamp-2 text-gray-600">
+                          {post.excerpt}
+                        </p>
+                        <div className="pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Button variant="outline" className="text-sm">
+                            Read More →
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
