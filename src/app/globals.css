@@ -70,3 +70,46 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* In globals.css, update calendar styles */
+.rdp {
+  --rdp-cell-size: 120px !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.rdp-months {
+  width: 100% !important;
+  height: 100% !important;
+  justify-content: center;
+}
+
+.rdp-month {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.rdp-table {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.rdp-cell {
+  padding: 8px !important;
+  height: auto !important;
+}
+
+.rdp-head_cell {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  padding: 1rem !important;
+}
+
+.rdp-day {
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 1.5rem !important;
+  aspect-ratio: 1 !important;
+}
