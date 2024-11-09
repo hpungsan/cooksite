@@ -1,5 +1,6 @@
 // src/components/ui/navbar.tsx
 import Link from 'next/link'
+import { UserCircle } from 'lucide-react'
 
 export function Navbar() {
   return (
@@ -15,7 +16,7 @@ export function Navbar() {
             </Link>
           </div>
           
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             <Link 
               href="/"
               className="text-sm font-medium hover:text-primary transition-colors"
@@ -39,6 +40,13 @@ export function Navbar() {
               className="text-sm font-medium hover:text-primary transition-colors"
             >
               Calendar
+            </Link>
+            <Link 
+              href="/profile"
+              className="p-2 hover:text-primary transition-colors"
+              aria-label="Go to profile"
+            >
+              <UserCircle className="w-5 h-5" />
             </Link>
           </div>
         </div>
