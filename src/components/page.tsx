@@ -1,12 +1,14 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, MessageCircle, Users } from "lucide-react"
 
-export default function Page() {
+export function BlockPage() {
   return (
     <main className="container mx-auto p-4 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold">Welcome back Hpung!</h1>
+        <h1 className="text-4xl font-bold">Welcome back Emma!</h1>
         <Button variant="outline" className="gap-2">
           <MessageCircle className="w-4 h-4" />
           Chat
