@@ -115,7 +115,10 @@ export default function CookingCalendar() {
                 "text-center p-2 border rounded-lg cursor-pointer hover:bg-secondary/50 transition-colors",
                 isSameDay(day, currentDate) && "bg-secondary"
               )}
-              onClick={() => setCurrentDate(day)}
+              onClick={() => {
+                setCurrentDate(day);
+                setView('daily');
+              }}
             >
               <div className="font-bold">{format(day, 'EEE')}</div>
               <div className="text-lg">{format(day, 'd')}</div>
@@ -140,7 +143,12 @@ export default function CookingCalendar() {
       <DayPicker
         mode="single"
         selected={currentDate}
-        onSelect={(date) => date && setCurrentDate(date)}
+        onSelect={(date) => {
+          if (date) {
+            setCurrentDate(date);
+            setView('weekly');
+          }
+        }}
         className={cn("p-6 flex justify-center", "rounded-md border")}
         showOutsideDays={true}
         classNames={{
