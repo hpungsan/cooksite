@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ArrowRight, Send } from "lucide-react"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 interface Message {
   id: number
@@ -26,16 +26,8 @@ interface Group {
 
 export default function CommunityChat() {
   const [activeGroupId, setActiveGroupId] = useState(1)
-  
-  const [groups] = useState<Group[]>([
-    { id: 1, name: "Cooking Enthusiasts", lastMessage: "Great recipe!", avatar: "/placeholder.svg", memberCount: 32 },
-    { id: 2, name: "Anth Class Cook Buddies", lastMessage: "Meeting tomorrow", avatar: "/placeholder.svg", memberCount: 15 },
-    { id: 3, name: "John Brown", lastMessage: "What's next on our list?", avatar: "/placeholder.svg", memberCount: 2 },
-    { id: 4, name: "Mr. Bean", lastMessage: "Spring planning tmrw?", avatar: "/placeholder.svg", memberCount: 2 },
-    { id: 5, name: "Jeff Henn", lastMessage: "Great!", avatar: "/placeholder.svg", memberCount: 2 },
-  ])
-
-  const [messages] = useState<Message[]>([
+  const [newMessage, setNewMessage] = useState("")
+  const [messages, setMessages] = useState<Message[]>([
     // Group 1 messages
     { id: 1, groupId: 1, sender: "Alice", content: "Hello everyone!", timestamp: "10:00 AM" },
     { id: 2, groupId: 1, sender: "Bob", content: "Hi Alice, how are you?", timestamp: "10:02 AM" },
@@ -59,6 +51,45 @@ export default function CommunityChat() {
     { id: 12, groupId: 5, sender: "Jeff", content: "Thanks for the help!", timestamp: "Yesterday" },
     { id: 13, groupId: 5, sender: "You", content: "Anytime!", timestamp: "Yesterday" },
   ])
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  
+  const [groups] = useState<Group[]>([
+    { id: 1, name: "Cooking Enthusiasts", lastMessage: "Great recipe!", avatar: "/placeholder.svg", memberCount: 32 },
+    { id: 2, name: "Anth Class Cook Buddies", lastMessage: "Meeting tomorrow", avatar: "/placeholder.svg", memberCount: 15 },
+    { id: 3, name: "John Brown", lastMessage: "What's next on our list?", avatar: "/placeholder.svg", memberCount: 2 },
+    { id: 4, name: "Mr. Bean", lastMessage: "Spring planning tmrw?", avatar: "/placeholder.svg", memberCount: 2 },
+    { id: 5, name: "Jeff Henn", lastMessage: "Great!", avatar: "/placeholder.svg", memberCount: 2 },
+  ])
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, activeGroupId])
+
+  const handleSendMessage = () => {
+    if (!newMessage.trim()) return
+
+    const newMsg: Message = {
+      id: messages.length + 1,
+      groupId: activeGroupId,
+      sender: "You",
+      content: newMessage,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
+
+    setMessages([...messages, newMsg])
+    setNewMessage("")
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSendMessage()
+    }
+  }
 
   const activeGroup = groups.find(g => g.id === activeGroupId)
   const activeMessages = messages.filter(m => m.groupId === activeGroupId)
@@ -104,21 +135,31 @@ export default function CommunityChat() {
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4">
             {activeMessages.map((message) => (
-              <Card key={message.id} className="p-4">
+              <Card 
+                key={message.id} 
+                className={`p-4 ${
+                  message.sender === "You" 
+                    ? "ml-auto bg-primary text-primary-foreground max-w-[80%]" 
+                    : "mr-auto bg-muted max-w-[80%]"
+                }`}
+              >
                 <div className="flex items-start gap-3">
-                  <Avatar>
-                    <AvatarFallback>{message.sender[0]}</AvatarFallback>
-                  </Avatar>
+                  {message.sender !== "You" && (
+                    <Avatar>
+                      <AvatarFallback>{message.sender[0]}</AvatarFallback>
+                    </Avatar>
+                  )}
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{message.sender}</span>
-                      <span className="text-sm text-muted-foreground">{message.timestamp}</span>
+                      <span className="text-xs opacity-70">{message.timestamp}</span>
                     </div>
-                    <p className="text-sm mt-1">{message.content}</p>
+                    <p className="mt-1">{message.content}</p>
                   </div>
                 </div>
               </Card>
             ))}
+            <div ref={messagesEndRef} />
           </div>
         </ScrollArea>
 
@@ -126,10 +167,13 @@ export default function CommunityChat() {
         <div className="p-4 border-t">
           <div className="flex gap-2">
             <Input 
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={handleKeyPress}
               placeholder="Type your message..." 
               className="flex-1"
             />
-            <Button size="icon">
+            <Button size="icon" onClick={handleSendMessage}>
               <Send className="h-4 w-4" />
               <span className="sr-only">Send message</span>
             </Button>

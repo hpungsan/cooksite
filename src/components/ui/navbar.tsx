@@ -34,6 +34,12 @@ export function Navbar() {
             >
               Dashboard
             </Link>
+            <Link 
+              href="/calendar"
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              Calendar
+            </Link>
           </div>
         </div>
       </div>
