@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ArrowRight, Send } from "lucide-react"
+import { ArrowRight, Send, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 
 interface Message {
@@ -28,38 +28,40 @@ export default function CommunityChat() {
   const [activeGroupId, setActiveGroupId] = useState(1)
   const [newMessage, setNewMessage] = useState("")
   const [messages, setMessages] = useState<Message[]>([
-    // Group 1 messages
-    { id: 1, groupId: 1, sender: "Alice", content: "Hello everyone!", timestamp: "10:00 AM" },
-    { id: 2, groupId: 1, sender: "Bob", content: "Hi Alice, how are you?", timestamp: "10:02 AM" },
-    { id: 3, groupId: 1, sender: "Charlie", content: "Looking forward to the potluck!", timestamp: "10:05 AM" },
-    { id: 4, groupId: 1, sender: "Alice", content: "Me too! I'm bringing lasagna", timestamp: "10:06 AM" },
+    // Cooking Enthusiasts messages
+    { id: 1, groupId: 1, sender: "Alice", content: "Just made an amazing pasta carbonara!", timestamp: "10:00 AM" },
+    { id: 2, groupId: 1, sender: "Bob", content: "What's your secret for the sauce?", timestamp: "10:02 AM" },
+    { id: 3, groupId: 1, sender: "Charlie", content: "Make sure to use fresh eggs and real pecorino!", timestamp: "10:05 AM" },
+    { id: 4, groupId: 1, sender: "Alice", content: "Yes, and never skip the black pepper!", timestamp: "10:06 AM" },
     
-    // Group 2 messages
-    { id: 5, groupId: 2, sender: "Emma", content: "Don't forget about tomorrow's meeting!", timestamp: "2:30 PM" },
-    { id: 6, groupId: 2, sender: "David", content: "What time was it again?", timestamp: "2:35 PM" },
-    { id: 7, groupId: 2, sender: "Emma", content: "3 PM at the usual spot", timestamp: "2:36 PM" },
+    // Baking Club messages
+    { id: 5, groupId: 2, sender: "Emma", content: "My sourdough starter is finally ready!", timestamp: "2:30 PM" },
+    { id: 6, groupId: 2, sender: "David", content: "How long did you ferment it?", timestamp: "2:35 PM" },
+    { id: 7, groupId: 2, sender: "Emma", content: "About 5 days, it smells perfect", timestamp: "2:36 PM" },
+    { id: 8, groupId: 2, sender: "You", content: "Don't forget to save some for next time!", timestamp: "2:40 PM" },
     
-    // Group 3 messages
-    { id: 8, groupId: 3, sender: "John", content: "Hey, shall we try that new recipe?", timestamp: "11:20 AM" },
-    { id: 9, groupId: 3, sender: "You", content: "Sure! Which one?", timestamp: "11:25 AM" },
+    // Vegan Recipes messages
+    { id: 9, groupId: 3, sender: "Sarah", content: "Made the mushroom risotto - amazing!", timestamp: "3:20 PM" },
+    { id: 10, groupId: 3, sender: "Mike", content: "Did you use nutritional yeast?", timestamp: "3:22 PM" },
+    { id: 11, groupId: 3, sender: "You", content: "Try adding some truffle oil next time", timestamp: "3:25 PM" },
+    { id: 12, groupId: 3, sender: "Sarah", content: "Great idea! Will do", timestamp: "3:30 PM" },
     
-    // Group 4 messages
-    { id: 10, groupId: 4, sender: "Mr. Bean", content: "About tomorrow's planning...", timestamp: "9:15 AM" },
-    { id: 11, groupId: 4, sender: "You", content: "Yes, I'll be there!", timestamp: "9:20 AM" },
-    
-    // Group 5 messages
-    { id: 12, groupId: 5, sender: "Jeff", content: "Thanks for the help!", timestamp: "Yesterday" },
-    { id: 13, groupId: 5, sender: "You", content: "Anytime!", timestamp: "Yesterday" },
+    // International Cuisine messages
+    { id: 13, groupId: 4, sender: "Lisa", content: "Anyone know where to find kaffir lime leaves?", timestamp: "4:15 PM" },
+    { id: 14, groupId: 4, sender: "Tom", content: "Asian market on 5th has them fresh", timestamp: "4:20 PM" },
+    { id: 15, groupId: 4, sender: "You", content: "They freeze well too if you want to stock up", timestamp: "4:22 PM" },
+    { id: 16, groupId: 4, sender: "Rachel", content: "Making green curry tonight!", timestamp: "4:30 PM" },
   ])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   
   const [groups] = useState<Group[]>([
     { id: 1, name: "Cooking Enthusiasts", lastMessage: "Great recipe!", avatar: "/placeholder.svg", memberCount: 32 },
-    { id: 2, name: "Anth Class Cook Buddies", lastMessage: "Meeting tomorrow", avatar: "/placeholder.svg", memberCount: 15 },
-    { id: 3, name: "John Brown", lastMessage: "What's next on our list?", avatar: "/placeholder.svg", memberCount: 2 },
-    { id: 4, name: "Mr. Bean", lastMessage: "Spring planning tmrw?", avatar: "/placeholder.svg", memberCount: 2 },
-    { id: 5, name: "Jeff Henn", lastMessage: "Great!", avatar: "/placeholder.svg", memberCount: 2 },
+    { id: 2, name: "Baking Club", lastMessage: "Perfect crust tips", avatar: "/placeholder.svg", memberCount: 28 },
+    { id: 3, name: "Vegan Recipes", lastMessage: "Try this mushroom risotto!", avatar: "/placeholder.svg", memberCount: 45 },
+    { id: 4, name: "International Cuisine", lastMessage: "Thai curry discussion", avatar: "/placeholder.svg", memberCount: 38 },
   ])
+
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -97,9 +99,18 @@ export default function CommunityChat() {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <div className="w-80 border-r flex flex-col">
-        <div className="p-4 border-b">
-          <h2 className="font-semibold text-lg">Community Groups</h2>
+      <div className={`transition-all duration-300 ease-in-out border-r flex flex-col ${
+        isSidebarCollapsed ? 'w-20' : 'w-80'
+      }`}>
+        <div className="p-4 border-b flex justify-between items-center">
+          {!isSidebarCollapsed && <h2 className="font-semibold text-lg">Community Groups</h2>}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+          >
+            {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
         </div>
         <ScrollArea className="flex-1">
           {groups.map((group) => (
@@ -114,11 +125,15 @@ export default function CommunityChat() {
                 <AvatarImage src={group.avatar} alt={group.name} />
                 <AvatarFallback>{group.name[0]}</AvatarFallback>
               </Avatar>
-              <div className="flex-1 text-left">
-                <div className="font-medium">{group.name}</div>
-                <div className="text-sm text-muted-foreground truncate">{group.lastMessage}</div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-muted-foreground" />
+              {!isSidebarCollapsed && (
+                <>
+                  <div className="flex-1 text-left">
+                    <div className="font-medium">{group.name}</div>
+                    <div className="text-sm text-muted-foreground truncate">{group.lastMessage}</div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                </>
+              )}
             </button>
           ))}
         </ScrollArea>

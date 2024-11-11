@@ -1,3 +1,13 @@
+Here's your updated README with the new introductory section:
+
+---
+
+# ANTH 220 Final Design Project Demo Site
+
+This repository hosts the demo site for the ANTH 220 Final Design Project.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

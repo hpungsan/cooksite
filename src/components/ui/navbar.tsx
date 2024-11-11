@@ -24,17 +24,18 @@ export function Navbar() {
               Home
             </Link>
             <Link 
-              href="/community"
+              href="/feed"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Community  
+              Feed
             </Link>
             <Link 
               href="/dashboard"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Dashboard
+              Dashboard  
             </Link>
+
             <Link 
               href="/calendar"
               className="text-sm font-medium hover:text-primary transition-colors"
