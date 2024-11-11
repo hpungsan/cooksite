@@ -1,7 +1,7 @@
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Heart, MessageCircle, Bookmark } from "lucide-react"
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Heart, MessageCircle, Bookmark } from "lucide-react";
 
 interface FeedPost {
   id: number;
@@ -26,66 +26,66 @@ export default function FeedPage() {
       id: 1,
       author: {
         name: "Hannah Snow",
-        image: "/demprofilepic/demprof1.png"
+        image: "/demprofilepic/demprof1.png",
       },
       content: {
         text: "Just made this amazing homemade ramen! The secret is in the 24-hour broth...",
-        image: "/dempostpic/post1.png"
+        image: "/dempostpic/post1.png",
       },
       stats: {
         likes: 124,
-        comments: 23
+        comments: 23,
       },
-      timestamp: "2 hours ago"
+      timestamp: "2 hours ago",
     },
     {
       id: 2,
       author: {
         name: "Mark Wise",
-        image: "/demprofilepic/demprof2.png"
+        image: "/demprofilepic/demprof2.png",
       },
       content: {
         text: "First attempt at making ice cream from scratch. The process was long but worth it!",
-        image: "/dempostpic/post2.png"
+        image: "/dempostpic/post2.png",
       },
       stats: {
         likes: 89,
-        comments: 15
+        comments: 15,
       },
-      timestamp: "4 hours ago"
+      timestamp: "4 hours ago",
     },
     {
       id: 3,
       author: {
         name: "Henry Bravata",
-        image: "/demprofilepic/demprof3.png"
+        image: "/demprofilepic/demprof3.png",
       },
       content: {
         text: "Sunday meal prep success! Made these colorful quinoa and spiced chicken",
-        image: "/dempostpic/post3.png"
+        image: "/dempostpic/post3.png",
       },
       stats: {
         likes: 245,
-        comments: 42
+        comments: 42,
       },
-      timestamp: "6 hours ago"
+      timestamp: "6 hours ago",
     },
     {
       id: 4,
       author: {
         name: "Emma Snider",
-        image: "/demprofilepic/demprof4.png"
+        image: "/demprofilepic/demprof4.png",
       },
       content: {
         text: "After countless attempts, I finally grilled the perfect burger! Juicy, just the right amount of char, and topped with all my favorite fixings. Feels like a burger milestone!",
-        image: "/dempostpic/post4.png"
+        image: "/dempostpic/post4.png",
       },
       stats: {
         likes: 167,
-        comments: 31
+        comments: 31,
       },
-      timestamp: "8 hours ago"
-    }
+      timestamp: "8 hours ago",
+    },
   ];
 
   return (
@@ -108,7 +108,9 @@ export default function FeedPage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold">{post.author.name}</h3>
-                    <p className="text-xs text-muted-foreground">{post.timestamp}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {post.timestamp}
+                    </p>
                   </div>
                   <Button variant="ghost" size="icon">
                     <Bookmark className="h-5 w-5" />
@@ -124,7 +126,7 @@ export default function FeedPage() {
                     className="object-cover"
                   />
                 </div>
-                
+
                 {/* Actions */}
                 <div className="p-4 border-b">
                   <div className="flex items-center space-x-4">
@@ -136,7 +138,9 @@ export default function FeedPage() {
                     </Button>
                   </div>
                   <div className="mt-2">
-                    <p className="text-sm font-semibold">{post.stats.likes} likes</p>
+                    <p className="text-sm font-semibold">
+                      {post.stats.likes} likes
+                    </p>
                   </div>
                 </div>
 

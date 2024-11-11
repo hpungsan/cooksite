@@ -1,7 +1,13 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lock, Percent, Rocket, Trophy, Users } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Lock, Percent, Rocket, Trophy, Users } from "lucide-react";
 
 export default function RewardsPage() {
   return (
@@ -22,7 +28,10 @@ export default function RewardsPage() {
             <CardHeader className="space-y-1">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl">Special Discount</CardTitle>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <Badge
+                  variant="secondary"
+                  className="bg-green-100 text-green-800"
+                >
                   <Percent className="h-3 w-3 mr-1" />
                   54% off
                 </Badge>
@@ -43,7 +52,10 @@ export default function RewardsPage() {
             <CardHeader className="space-y-1">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl">Profile Boost</CardTitle>
-                <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                <Badge
+                  variant="secondary"
+                  className="bg-blue-100 text-blue-800"
+                >
                   <Rocket className="h-3 w-3 mr-1" />
                   Boost
                 </Badge>
@@ -64,7 +76,10 @@ export default function RewardsPage() {
             <CardHeader className="space-y-1">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl">Premium Access</CardTitle>
-                <Badge variant="secondary" className="bg-gray-100 text-gray-800">
+                <Badge
+                  variant="secondary"
+                  className="bg-gray-100 text-gray-800"
+                >
                   <Lock className="h-3 w-3 mr-1" />
                   Locked
                 </Badge>
@@ -87,7 +102,10 @@ export default function RewardsPage() {
             <CardHeader className="space-y-1">
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl">Community Badge</CardTitle>
-                <Badge variant="secondary" className="bg-gray-100 text-gray-800">
+                <Badge
+                  variant="secondary"
+                  className="bg-gray-100 text-gray-800"
+                >
                   <Lock className="h-3 w-3 mr-1" />
                   Locked
                 </Badge>
@@ -111,5 +129,5 @@ export default function RewardsPage() {
         <p>Locked rewards will require more points to use</p>
       </div>
     </div>
-  )
+  );
 }
