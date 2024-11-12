@@ -2,11 +2,31 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ArrowRight, Send, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
+import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
+
+import { Plus } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+interface CommunitySuggestion {
+  id: number
+  name: string
+  description: string
+  memberCount: number
+  category: string
+  image: string
+}
 
 interface Message {
   id: number
@@ -54,7 +74,7 @@ export default function CommunityChat() {
   ])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   
-  const [groups] = useState<Group[]>([
+  const [groups, setGroups] = useState<Group[]>([
     { id: 1, name: "Cooking Enthusiasts", lastMessage: "Great recipe!", avatar: "/placeholder.svg", memberCount: 32 },
     { id: 2, name: "Baking Club", lastMessage: "Perfect crust tips", avatar: "/placeholder.svg", memberCount: 28 },
     { id: 3, name: "Vegan Recipes", lastMessage: "Try this mushroom risotto!", avatar: "/placeholder.svg", memberCount: 45 },
@@ -95,6 +115,35 @@ export default function CommunityChat() {
 
   const activeGroup = groups.find(g => g.id === activeGroupId)
   const activeMessages = messages.filter(m => m.groupId === activeGroupId)
+
+  const [communitySuggestions] = useState<CommunitySuggestion[]>([
+    {
+      id: 1,
+      name: "Pasta Perfectionists",
+      description: "For those dedicated to mastering the art of pasta making",
+      memberCount: 156,
+      category: "Italian Cuisine",
+      image: "/bpfood/bp1.png"
+    },
+    {
+      id: 2,
+      name: "Sourdough Society",
+      description: "Share your sourdough journey and tips",
+      memberCount: 89,
+      category: "Baking",
+      image: "/bpfood/bp2.png"
+    },
+    {
+      id: 3,
+      name: "Plant-Based Pioneers",
+      description: "Exploring innovative vegan cooking techniques",
+      memberCount: 234,
+      category: "Vegan",
+      image: "/bpfood/bp3.png"
+    }
+  ])
+
+
 
   return (
     <div className="flex h-screen bg-background">
@@ -137,6 +186,63 @@ export default function CommunityChat() {
             </button>
           ))}
         </ScrollArea>
+        {!isSidebarCollapsed && (
+          <div className="p-4 border-t">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="w-full gap-2">
+                  <Plus className="h-4 w-4" />
+                  Browse Communities
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle>Browse Communities</DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  {communitySuggestions.map((community) => (
+                    <Card key={community.id} className="overflow-hidden">
+                      <div className="relative h-32">
+                        <Image
+                          src={community.image}
+                          alt={community.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold mb-1">{community.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {community.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <Badge variant="secondary">
+                            {community.category}
+                          </Badge>
+                          <span className="text-sm text-muted-foreground">
+                            {community.memberCount} members
+                          </span>
+                        </div>
+                        <Button className="w-full mt-4" onClick={() => {
+                          const newGroup = {
+                            id: groups.length + 1,
+                            name: community.name,
+                            lastMessage: "Welcome to the group!",
+                            avatar: community.image,
+                            memberCount: community.memberCount
+                          }
+                          setGroups([...groups, newGroup])
+                        }}>
+                          Join Community
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
       </div>
 
       {/* Main Chat Area */}

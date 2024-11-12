@@ -6,6 +6,7 @@ import { Calendar, MessageCircle, Users, User } from "lucide-react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import localFont from "next/font/local";
+import { Eye } from "lucide-react";
 
 const magicRetro = localFont({
   src: "../fonts/MagicRetro.ttf",
@@ -90,6 +91,13 @@ export default function Page() {
                 <div 
                   className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-200"
                 />
+                {/* See Post Overlay */}
+                <div className="absolute bottom-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-200 bg-gradient-to-t from-black/60 to-transparent">
+                  <div className="flex items-center gap-2 text-white">
+                    <Eye className="w-4 h-4" />
+                    <span className="text-sm font-medium">See Post</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
