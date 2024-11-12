@@ -66,6 +66,36 @@ export default function Page() {
         </div>
       </div>
 
+      {/* Food Gallery Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MessageCircle className="w-5 h-5" aria-hidden="true" />
+            Food Gallery Preview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((num) => (
+              <div 
+                key={num} 
+                className="relative group cursor-pointer aspect-square overflow-hidden rounded-md"
+              >
+                <Image
+                  src={`/bpfood/bp${num}.png`}
+                  alt={`Food preview ${num}`}
+                  fill
+                  className="object-cover transition-transform duration-200 group-hover:scale-105"
+                />
+                <div 
+                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-200"
+                />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      
       {/* This Week Section */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Coming This week...</h2>
@@ -92,6 +122,7 @@ export default function Page() {
           </CardContent>
         </Card>
       </section>
+
 
       {/* Weekly Theme and Community Blog Section */}
       <div className="grid md:grid-cols-2 gap-6">
