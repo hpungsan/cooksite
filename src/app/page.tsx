@@ -1,11 +1,12 @@
-// Import necessary components and icons
 "use client"
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MessageCircle, Users, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Input } from "@/components/ui/input";
 
 // Add these banner images at the top of the file
 const bannerImages = [
@@ -16,54 +17,50 @@ const bannerImages = [
 
 // Define the main page component
 export default function Page() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % bannerImages.length);
-    }, 4000); // Rotate every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <main className="container mx-auto p-4 space-y-6">
-      {/* Banner with rotating images */}
-      <div className="relative h-64 rounded-xl overflow-hidden mb-6">
-        {bannerImages.map((image, index) => (
-          <div
-            key={image}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentImageIndex ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <Image
-              src={image}
-              alt={`Banner ${index + 1}`}
-              fill
-              className="object-cover"
-              priority={index === 0}
-            />
-          </div>
-        ))}
-        {/* Overlay and Welcome Text */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent">
-          <div className="flex justify-between items-center h-full p-8">
-            <h1 className="text-4xl font-bold text-white">Welcome back Hpung!</h1>
-            <div className="flex gap-4">
-            </div>
-          </div>
-        </div>
+    <main className="container mx-auto p-4 space-y-6 relative">
+      {/* Decorative stars */}
+      <div className="absolute top-[80px] left-[250px] -z-10">
+        <Image
+          src="/greenstar.png"
+          alt=""
+          width={40}
+          height={40}
+          aria-hidden="true"
+        />
+      </div>
+      
+      <div className="absolute top-[100px] left-20 -z-10">
+        <Image
+          src="/yellowstar.png"
+          alt=""
+          width={30}
+          height={30}
+          aria-hidden="true"
+        />
       </div>
 
-      {/* Add new Profile Link section */}
-      <div className="flex justify-end mb-4">
-        <Link href="/profile">
-          <Button className="gap-2" variant="outline">
-            <User className="w-4 h-4" aria-hidden="true" />
-            View Profile
-          </Button>
-        </Link>
+      {/* Mascot and Welcome Message */}
+      <div className="p-6 mb-6">
+        <div className="flex items-center gap-4">
+          {/* Mascot Image */}
+          <div className="relative w-72 h-72">
+            <Image
+              src="/homemascot.png" 
+              alt="Garnish Mascot"
+              fill
+              className="object-contain"
+            />
+          </div>
+          
+          {/* Speech Bubble */}
+          <div className="relative bg-[#f9e4a7] p-6 rounded-2xl shadow-lg">
+            <div className="absolute left-0 top-1/2 -translate-x-4 -translate-y-1/2">
+              <div className="w-0 h-0 border-y-[10px] border-y-transparent border-r-[20px] border-r-[#f9e4a7]"/>
+            </div>
+            <h1 className="text-4xl font-bold">Welcome back Hpung San Awng Jum!</h1>
+          </div>
+        </div>
       </div>
 
       {/* This Week Section */}
@@ -119,6 +116,45 @@ export default function Page() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-[#f9e4a7] mt-20 p-8 rounded-xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="font-bold mb-4">Community</h3>
+            <ul className="space-y-2">
+              <li>Human Health</li>
+              <li>Animal Health</li>
+              <li>Environmental Health</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold mb-4">Trending</h3>
+            <ul className="space-y-2">
+              <li>Pizza</li>
+              <li>How to Make Ice Cream</li>
+              <li>New Mac n Cheese</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold mb-4">Rewards</h3>
+            <ul className="space-y-2">
+              <li>Find a Farm</li>
+              <li>Write a Letter</li>
+              <li>Advocate</li>
+              <li>Donate</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-bold mb-4">Garnish Your Feed, Garnish Your Life.</h3>
+            <div className="flex gap-2">
+            <Input type="email" placeholder="Email" style={{ border: "1px solid black" }} className="rounded-full" />
+              <Button className="bg-green-500 hover:bg-green-600 rounded-full">JOIN</Button>
+            </div>
+            <p className="mt-4 text-sm">support@garnish.com</p>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
