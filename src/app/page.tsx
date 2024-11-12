@@ -1,26 +1,25 @@
-"use client"
+"use client";
 
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MessageCircle, Users, User } from "lucide-react";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import localFont from "next/font/local";
 
-// Add these banner images at the top of the file
-const bannerImages = [
-  "/pbfood/pb1.png",
-  "/pbfood/pb2.png", 
-  "/pbfood/pb3.png"
-];
+const magicRetro = localFont({
+  src: "../fonts/MagicRetro.ttf",
+  variable: "--font-magic-retro",
+});
 
 // Define the main page component
 export default function Page() {
   return (
-    <main className="container mx-auto p-4 space-y-6 relative">
+    <main
+      className={`${magicRetro.variable} container mx-auto px-4 space-y-6 relative`}
+    >
       {/* Decorative stars */}
-      <div className="absolute top-[80px] left-[250px] -z-10">
+      <div className="absolute top-[80px] right-[250px] -z-10">
         <Image
           src="/greenstar.png"
           alt=""
@@ -29,8 +28,8 @@ export default function Page() {
           aria-hidden="true"
         />
       </div>
-      
-      <div className="absolute top-[100px] left-20 -z-10">
+
+      <div className="absolute top-[100px] right-[450px] -z-10">
         <Image
           src="/yellowstar.png"
           alt=""
@@ -41,24 +40,28 @@ export default function Page() {
       </div>
 
       {/* Mascot and Welcome Message */}
-      <div className="p-6 mb-6">
-        <div className="flex items-center gap-4">
+      <div className="pl-0 mb-6">
+        <div className="flex flex-row-reverse items-center gap-8 mr-44">
           {/* Mascot Image */}
-          <div className="relative w-72 h-72">
+          <div className="relative w-80 h-80">
             <Image
-              src="/homemascot.png" 
+              src="/homemascot.png"
               alt="Garnish Mascot"
               fill
               className="object-contain"
             />
           </div>
-          
+
           {/* Speech Bubble */}
-          <div className="relative bg-[#f9e4a7] p-6 rounded-2xl shadow-lg">
-            <div className="absolute left-0 top-1/2 -translate-x-4 -translate-y-1/2">
-              <div className="w-0 h-0 border-y-[10px] border-y-transparent border-r-[20px] border-r-[#f9e4a7]"/>
+          <div className="relative bg-[#f9e4a7] p-4 rounded-2xl shadow-lg">
+            <div className="absolute right-0 top-1/2 translate-x-4 -translate-y-1/2">
+              <div className="w-0 h-0 border-y-[10px] border-y-transparent border-l-[20px] border-l-[#f9e4a7]" />
             </div>
-            <h1 className="text-4xl font-bold">Welcome back Hpung San Awng Jum!</h1>
+            <h1 className={`text-3xl ${magicRetro.className}`}>
+              Welcome Back,
+              <br />
+              Hpung San Awng Jum!
+            </h1>{" "}
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@ export default function Page() {
       {/* This Week Section */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Coming This week...</h2>
-        
+
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -99,7 +102,8 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              This week we're focusing on healthy meal preparation and sharing our favorite recipes!
+              This week we're focusing on healthy meal preparation and sharing
+              our favorite recipes!
             </p>
           </CardContent>
         </Card>
@@ -111,7 +115,8 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Share your cooking journey and inspire others with your culinary adventures.
+              Share your cooking journey and inspire others with your culinary
+              adventures.
             </p>
           </CardContent>
         </Card>
@@ -146,10 +151,19 @@ export default function Page() {
             </ul>
           </div>
           <div>
-            <h3 className="font-bold mb-4">Garnish Your Feed, Garnish Your Life.</h3>
+            <h3 className="font-bold mb-4">
+              Garnish Your Feed, Garnish Your Life.
+            </h3>
             <div className="flex gap-2">
-            <Input type="email" placeholder="Email" style={{ border: "1px solid black" }} className="rounded-full" />
-              <Button className="bg-green-500 hover:bg-green-600 rounded-full">JOIN</Button>
+              <Input
+                type="email"
+                placeholder="Email"
+                style={{ border: "1px solid black" }}
+                className="rounded-full"
+              />
+              <Button className="bg-green-500 hover:bg-green-600 rounded-full">
+                JOIN
+              </Button>
             </div>
             <p className="mt-4 text-sm">support@garnish.com</p>
           </div>
