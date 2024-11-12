@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, MessageCircle, Bookmark, ImagePlus, Trophy, Percent } from "lucide-react";
+import { Heart, MessageCircle, Bookmark, ImagePlus, Trophy, Percent, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface FeedPost {
   id: number;
@@ -19,10 +23,91 @@ interface FeedPost {
     comments: number;
   };
   timestamp: string;
+  isLiked: boolean; 
 }
 
+interface DemoPostModalProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+  postText: string;
+  setPostText: (text: string) => void;
+  imagePreview: string | null;
+  onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onImageRemove: () => void;
+  onSubmit: () => void;
+}
+
+const DemoPostModal = ({
+  isOpen,
+  onOpenChange,
+  postText,
+  setPostText,
+  imagePreview,
+  onImageUpload,
+  onImageRemove,
+  onSubmit
+}: DemoPostModalProps) => (
+  <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+        <DialogTitle>Create New Post</DialogTitle>
+      </DialogHeader>
+      <div className="space-y-4">
+        <Textarea
+          placeholder="What's cooking?"
+          value={postText}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPostText(e.target.value)}
+          className="min-h-[100px] resize-none"
+        />
+        
+        {imagePreview && (
+          <div className="relative w-full aspect-video">
+            <Image
+              src={imagePreview}
+              alt="Preview"
+              fill
+              className="object-cover rounded-md"
+            />
+            <Button
+              variant="destructive"
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={onImageRemove}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between">
+          <div>
+            <input
+              type="file"
+              id="image-upload"
+              accept="image/*"
+              className="hidden"
+              onChange={onImageUpload}
+            />
+            <label htmlFor="image-upload">
+              <Button variant="ghost" size="icon" type="button" asChild>
+                <span>
+                  <ImagePlus className="h-5 w-5" />
+                </span>
+              </Button>
+            </label>
+          </div>
+          <Button onClick={onSubmit}>Share Post</Button>
+        </div>
+      </div>
+    </DialogContent>
+  </Dialog>
+);
+
 export default function FeedPage() {
-  const feedPosts: FeedPost[] = [
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [demoPostText, setDemoPostText] = useState<string>("");
+  const [demoImagePreview, setDemoImagePreview] = useState<string | null>(null);
+  const [posts, setPosts] = useState<FeedPost[]>([
     {
       id: 1,
       author: {
@@ -38,6 +123,7 @@ export default function FeedPage() {
         comments: 23,
       },
       timestamp: "2 hours ago",
+      isLiked: false,
     },
     {
       id: 2,
@@ -54,6 +140,7 @@ export default function FeedPage() {
         comments: 15,
       },
       timestamp: "4 hours ago",
+      isLiked: false,
     },
     {
       id: 3,
@@ -70,6 +157,7 @@ export default function FeedPage() {
         comments: 42,
       },
       timestamp: "6 hours ago",
+      isLiked: false,
     },
     {
       id: 4,
@@ -86,11 +174,77 @@ export default function FeedPage() {
         comments: 31,
       },
       timestamp: "8 hours ago",
+      isLiked: false,
     },
-  ];
+  ]);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setDemoImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCreatePost = () => {
+    if (!demoPostText) return;
+
+    const newPost: FeedPost = {
+      id: posts.length + 1,
+      author: {
+        name: "You",
+        image: "/profile.png",
+      },
+      content: {
+        text: demoPostText,
+        image: demoImagePreview || "/placeholder.png",
+      },
+      stats: {
+        likes: 0,
+        comments: 0,
+      },
+      timestamp: "Just now",
+      isLiked: false,
+    };
+
+    setPosts([newPost, ...posts]); // Add new post at the beginning
+    setDemoPostText(""); // Reset form
+    setDemoImagePreview(null);
+    setIsPostModalOpen(false);
+  };
+
+  const handleLike = (postId: number) => {
+    setPosts(posts.map(post => {
+      if (post.id === postId) {
+        const newLiked = !post.isLiked;
+        return {
+          ...post,
+          isLiked: newLiked,
+          stats: {
+            ...post.stats,
+            likes: post.stats.likes + (newLiked ? 1 : -1)
+          }
+        };
+      }
+      return post;
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-background">
+      <DemoPostModal 
+        isOpen={isPostModalOpen}
+        onOpenChange={setIsPostModalOpen}
+        postText={demoPostText}
+        setPostText={setDemoPostText}
+        imagePreview={demoImagePreview}
+        onImageUpload={handleImageUpload}
+        onImageRemove={() => setDemoImagePreview(null)}
+        onSubmit={handleCreatePost}
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-[300px_1fr] gap-6 max-w-6xl mx-auto">
           {/* Left Sidebar with New Post Creation */}
@@ -112,16 +266,13 @@ export default function FeedPage() {
                       <h3 className="font-semibold">Create Post</h3>
                     </div>
                   </div>
-                  <Textarea
-                    placeholder="What's cooking?"
-                    className="min-h-[100px] resize-none"
-                  />
-                  <div className="flex items-center justify-between">
-                    <Button variant="ghost" size="icon">
-                      <ImagePlus className="h-5 w-5" />
-                    </Button>
-                    <Button>Post</Button>
-                  </div>
+                  <Button 
+                    className="w-full text-left justify-start text-muted-foreground bg-muted/50 hover:bg-muted"
+                    variant="ghost"
+                    onClick={() => setIsPostModalOpen(true)}
+                  >
+                    What's cooking?
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -146,6 +297,14 @@ export default function FeedPage() {
                       <span className="text-xs text-muted-foreground">1,000 points</span>
                     </div>
                   </div>
+
+                  <div className="mt-4">
+                    <Link href="/dashboard/rewards">
+                      <Button variant="outline" className="w-full">
+                        View All Rewards
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -154,7 +313,7 @@ export default function FeedPage() {
           {/* Main Feed Content */}
           <div className="flex justify-center">
             <div className="max-w-[720px] w-full space-y-6">
-              {feedPosts.map((post) => (
+              {posts.map((post) => (
                 <Card key={post.id} className="overflow-hidden">
                   <CardContent className="p-0">
                     {/* Author Header */}
@@ -192,8 +351,14 @@ export default function FeedPage() {
                     {/* Actions */}
                     <div className="p-4 border-b">
                       <div className="flex items-center space-x-4">
-                        <Button variant="ghost" size="icon">
-                          <Heart className="h-5 w-5" />
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleLike(post.id)}
+                        >
+                          <Heart 
+                            className={`h-5 w-5 ${post.isLiked ? "fill-current text-red-500" : ""}`} 
+                          />
                         </Button>
                         <Button variant="ghost" size="icon">
                           <MessageCircle className="h-5 w-5" />

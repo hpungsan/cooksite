@@ -1,7 +1,12 @@
+"use client"
+
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Archive } from "lucide-react"
+import { useState } from "react"
+import { Pencil } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
 
 interface ArchiveItem {
   id: number;
@@ -82,6 +87,12 @@ export default function ProfilePage() {
     }
   ];
 
+  const [isEditingBio, setIsEditingBio] = useState(false)
+  const [bioText, setBioText] = useState(`Hi! I'm Hpung, a computer science student with a big love for cooking. 
+  I enjoy trying out new recipes, experimenting with flavors, 
+  and bringing friends together over a good meal. Excited to meet others who 
+  share a passion for food and swap tips, tricks, and favorite dishes!`)
+
   return (
     <div className="min-h-screen bg-background">
       <div className="w-full h-48 bg-muted relative rounded-xl border border-gray-200 shadow-md mb-8"> 
@@ -108,15 +119,44 @@ export default function ProfilePage() {
       <div className="container mx-auto px-4 pt-20 pb-16 max-w-7xl">
         <div className="space-y-8"> 
           <div className="space-y-4 bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
-            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent">
-              Biography
-            </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl">
-              Hi! I'm Hpung, a computer science student with a big love for cooking. 
-              I enjoy trying out new recipes, experimenting with flavors, 
-              and bringing friends together over a good meal. Excited to meet others who 
-              share a passion for food and swap tips, tricks, and favorite dishes!
-            </p>
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent">
+                Biography
+              </h1>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setIsEditingBio(!isEditingBio)}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {isEditingBio ? (
+              <div className="space-y-4">
+                <Textarea 
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setBioText(e.target.value)}
+                  className="min-h-[120px] text-lg"
+                />
+                <div className="flex gap-2 justify-end">
+                  <Button 
+                    variant="outline"
+                    onClick={() => setIsEditingBio(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => setIsEditingBio(false)}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl">
+                {bioText}
+              </p>
+            )}
           </div>
 
           {/* New Grid Layout */}
@@ -149,7 +189,7 @@ export default function ProfilePage() {
 
             {/* Blog Posts Section - Larger */}
             <div className="col-span-9">
-              <h2 className="text-2xl font-semibold mb-6">Latest Posts</h2>
+              <h2 className="text-2xl font-semibold mb-6">My Latest Posts</h2>
               <div className="grid grid-cols-2 gap-6">
                 {blogPosts.map((post) => (
                   <Card key={post.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
