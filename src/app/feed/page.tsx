@@ -248,7 +248,7 @@ export default function FeedPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-[300px_1fr] gap-6 max-w-6xl mx-auto">
           {/* Left Sidebar with New Post Creation */}
-          <div className="sticky top-4 h-fit space-y-4">
+          <aside className="sticky top-4 h-fit space-y-4">
             <Card>
               <CardContent className="p-4">
                 <div className="space-y-3">
@@ -270,8 +270,9 @@ export default function FeedPage() {
                     className="w-full text-left justify-start text-muted-foreground bg-muted/50 hover:bg-muted"
                     variant="ghost"
                     onClick={() => setIsPostModalOpen(true)}
+                    aria-haspopup="dialog"
                   >
-                    What's cooking?
+                    What&apos;s cooking?
                   </Button>
                 </div>
               </CardContent>
@@ -308,7 +309,7 @@ export default function FeedPage() {
                 </div>
               </CardContent>
             </Card>
-          </div>
+          </aside>
 
           {/* Main Feed Content */}
           <div className="flex justify-center">

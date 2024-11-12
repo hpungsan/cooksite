@@ -141,7 +141,7 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              This week we're focusing on healthy meal preparation and sharing
+              This week we are focusing on healthy meal preparation and sharing
               our favorite recipes!
             </p>
           </CardContent>
