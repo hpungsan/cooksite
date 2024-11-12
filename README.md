@@ -1,7 +1,7 @@
 
 # Garnish - ANTH 220 Final Design Project Demo Site
 
-Welcome to the demo site for **Garnish**—an innovative app designed to inspire people to cook, share recipes, and connect with a vibrant community. Garnish combines gamification, social features, and rewards to make cooking an engaging, fun, and social experience. This repository hosts the Next.js demo site for showcasing the final design concepts of the Garnish app as part of the ANTH 220 Final Design Project.
+Demo site for **Garnish**—an innovative app designed to inspire people to cook, share recipes, and connect with a vibrant community. Garnish combines gamification, social features, and rewards to make cooking an engaging, fun, and social experience. This repository hosts the Next.js demo site for showcasing the final design concepts of the Garnish app as part of the ANTH 220 Final Design Project.
 
 This project is built with [Next.js](https://nextjs.org) and was initialized with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) to facilitate a smooth development workflow.
 
@@ -14,7 +14,6 @@ This project is built with [Next.js](https://nextjs.org) and was initialized wit
 - [Fonts and Styling](#fonts-and-styling)
 - [Learn More](#learn-more)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
 
@@ -27,8 +26,8 @@ The **Garnish** app is designed to bring people together through cooking. By ble
 To set up Garnish locally, clone this repository and install dependencies:
 
 ```bash
-git clone https://github.com/yourusername/garnish-demo
-cd garnish-demo
+git clone https://github.com/hpungsan/cooksite
+cd cooksite
 npm install
 ```
 
@@ -69,16 +68,6 @@ To dive deeper into Next.js, check out the following resources:
 The simplest way to deploy Garnish is through the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), created by the same team behind Next.js.
 
 For deployment guidance, refer to the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
-
-## Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/YourFeature`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a pull request.
 
 ## License
 

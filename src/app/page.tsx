@@ -42,9 +42,9 @@ export default function Page() {
 
       {/* Mascot and Welcome Message */}
       <div className="pl-0 mb-6">
-        <div className="flex flex-row-reverse items-center gap-8 mr-44">
+        <div className="flex flex-row-reverse items-center gap-10 mr-44"> 
           {/* Mascot Image */}
-          <div className="relative w-80 h-80">
+          <div className="relative w-96 h-96">
             <Image
               src="/homemascot.png"
               alt="Garnish Mascot"
@@ -54,15 +54,15 @@ export default function Page() {
           </div>
 
           {/* Speech Bubble */}
-          <div className="relative bg-[#f9e4a7] p-4 rounded-2xl shadow-lg">
-            <div className="absolute right-0 top-1/2 translate-x-4 -translate-y-1/2">
-              <div className="w-0 h-0 border-y-[10px] border-y-transparent border-l-[20px] border-l-[#f9e4a7]" />
+          <div className="relative bg-[#f9e4a7] p-6 rounded-3xl shadow-lg min-w-[400px]"> 
+            <div className="absolute right-0 top-1/2 translate-x-6 -translate-y-1/2"> 
+              <div className="w-0 h-0 border-y-[15px] border-y-transparent border-l-[30px] border-l-[#f9e4a7]" /> 
             </div>
-            <h1 className={`text-3xl ${magicRetro.className}`}>
-              Welcome Back,
+            <h1 className={`text-[2.0rem] leading-relaxed ${magicRetro.className}`}>
+            Welcome Back,
               <br />
               Hpung San Awng Jum!
-            </h1>{" "}
+            </h1>
           </div>
         </div>
       </div>
