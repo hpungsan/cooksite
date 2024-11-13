@@ -53,7 +53,7 @@ export default function Page() {
           </div>
 
           {/* Speech Bubble */}
-          <div className="relative bg-[#f9e4a7] p-4 sm:p-6 rounded-3xl shadow-lg w-full sm:min-w-[400px]"> 
+          <div className="relative bg-[#f9e4a7] p-4 sm:p-6 rounded-3xl shadow-lg w-[80%] mx-auto sm:w-full sm:max-w-[500px] sm:ml-60"> 
             {/* Desktop speech bubble pointer */}
             <div className="hidden sm:block absolute right-0 top-1/2 translate-x-6 -translate-y-1/2"> 
               <div className="w-0 h-0 border-y-[15px] border-y-transparent border-l-[30px] border-l-[#f9e4a7]" /> 
@@ -62,7 +62,7 @@ export default function Page() {
             <div className="sm:hidden absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full"> 
               <div className="w-0 h-0 border-x-[15px] border-x-transparent border-t-[30px] border-t-[#f9e4a7]" /> 
             </div>
-            <h1 className={`text-xl sm:text-[2.0rem] leading-relaxed ${magicRetro.className} text-center sm:text-left`}>
+            <h1 className={`text-xl sm:text-[2.0rem] leading-relaxed ${magicRetro.className} text-center`}>
               Welcome Back,
               <br />
               Hpung San Awng Jum!

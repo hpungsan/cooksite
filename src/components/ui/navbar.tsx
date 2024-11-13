@@ -16,7 +16,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="bg-[#fffaed] border-b relative">
+    <nav className="bg-[#fffaed] border-b relative z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-0 pl-0"> 
@@ -74,7 +74,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-16 left-0 right-0 bg-[#fffaed] border-b shadow-lg">
+        <div className="lg:hidden absolute top-16 left-0 right-0 bg-[#fffaed] border-b shadow-lg z-50">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const sidebarItems = [
   {
@@ -45,6 +45,19 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  // Auto-collapse on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
@@ -52,15 +65,15 @@ export default function DashboardLayout({
         className={`
         transition-all duration-300 ease-in-out
         border-r bg-card relative
-        ${isCollapsed ? "w-20" : "w-64"}
+        ${isCollapsed ? "w-16 md:w-20" : "w-64"}
       `}
       >
-        <div className="p-6">
-          {/* Toggle Button */}
+        <div className="p-3 md:p-6">
+          {/* Toggle Button - Hidden on mobile */}
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-3 top-3 rounded-full border bg-background"
+            className="absolute -right-3 top-3 rounded-full border bg-background hidden md:flex"
             onClick={() => setIsCollapsed(!isCollapsed)}
           >
             {isCollapsed ? (
@@ -72,7 +85,7 @@ export default function DashboardLayout({
 
           <h1
             className={`
-            text-2xl font-semibold mb-6
+            text-xl md:text-2xl font-semibold mb-4 md:mb-6
             transition-opacity duration-200
             ${isCollapsed ? "opacity-0" : "opacity-100"}
           `}
@@ -80,7 +93,7 @@ export default function DashboardLayout({
             {!isCollapsed && "Dashboard"}
           </h1>
 
-          <nav className="space-y-2">
+          <nav className="space-y-1 md:space-y-2">
             {sidebarItems.map((item) => (
               <Link key={item.title} href={item.href}>
                 <Button
