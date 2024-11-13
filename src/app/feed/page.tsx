@@ -308,7 +308,7 @@ export default function FeedPage() {
             </Card>
             <div className="relative w-full aspect-square mt-4 hidden ml-[-20px] lg:block">
               <Image
-                src="/homemascot.png"
+                src="/mascotv2.png"
                 alt="Garnish Mascot"
                 fill
                 className="object-contain"

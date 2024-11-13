@@ -15,6 +15,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 type Event = {
   date: Date;
   title: string;
+  notes?: string; 
 }
 
 export default function CookingCalendar() {
@@ -29,6 +30,8 @@ export default function CookingCalendar() {
     date: new Date(),
     title: ''
   })
+  const [isNoteOpen, setIsNoteOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
 
   const handleAddEvent = () => {
     if (!newEvent.title) return
@@ -85,6 +88,7 @@ export default function CookingCalendar() {
     }
   }
 
+  // Modify the renderDailyView to show note indicators
   const renderDailyView = () => (
     <div className="border rounded-lg p-3 sm:p-6 bg-white">
       <h2 className="text-xl sm:text-2xl font-bold mb-4">{format(currentDate, 'MMMM d, yyyy')}</h2>
@@ -92,14 +96,28 @@ export default function CookingCalendar() {
         {events
           .filter(event => isSameDay(new Date(event.date), currentDate))
           .map((event, index) => (
-            <li key={index} className="p-2 sm:p-3 bg-secondary rounded-lg shadow text-sm sm:text-base">
-              {event.title} - {format(event.date, 'MM/dd/yyyy')}
+            <li 
+              key={index} 
+              className="p-2 sm:p-3 bg-secondary rounded-lg shadow text-sm sm:text-base hover:bg-secondary/80 cursor-pointer transition-colors relative"
+              onClick={() => {
+                setSelectedEvent(event);
+                setIsNoteOpen(true);
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <span>{event.title} - {format(event.date, 'MM/dd/yyyy')}</span>
+                {event.notes && (
+                  <span className="h-2 w-2 bg-primary rounded-full" 
+                        title="Has notes" />
+                )}
+              </div>
             </li>
           ))}
       </ul>
     </div>
   )
 
+  // Modify weekly view to show note indicators
   const renderWeeklyView = () => {
     const start = startOfWeek(currentDate)
     const end = endOfWeek(currentDate)
@@ -126,8 +144,13 @@ export default function CookingCalendar() {
                 {events
                   .filter(event => isSameDay(event.date, day))
                   .map((event, eventIndex) => (
-                    <li key={eventIndex} className="text-[10px] sm:text-xs p-1 sm:p-2 bg-secondary rounded-lg truncate">
-                      {event.title}
+                    <li key={eventIndex} className="text-[10px] sm:text-xs p-1 sm:p-2 bg-secondary rounded-lg truncate relative">
+                      <div className="flex items-center gap-1">
+                        {event.title}
+                        {event.notes && (
+                          <span className="h-1.5 w-1.5 bg-primary rounded-full inline-block" />
+                        )}
+                      </div>
                     </li>
                   ))}
               </ul>
@@ -138,6 +161,7 @@ export default function CookingCalendar() {
     )
   }
 
+  // Update the DayPicker modifiers to show note indicators
   const renderMonthlyView = () => (
     <div className="border rounded-lg p-6 bg-white">
       <DayPicker
@@ -188,12 +212,18 @@ export default function CookingCalendar() {
         modifiers={{
           event: (date) => events.some(event => 
             isSameDay(new Date(event.date), date)
+          ),
+          hasNotes: (date) => events.some(event => 
+            isSameDay(new Date(event.date), date) && event.notes
           )
         }}
         modifiersStyles={{
           event: { 
             backgroundColor: 'var(--secondary)',
             color: 'var(--secondary-foreground)'
+          },
+          hasNotes: {
+            border: '2px solid var(--primary)'
           }
         }}
         month={currentDate}
@@ -248,7 +278,7 @@ export default function CookingCalendar() {
                 id="event-title"
                 value={newEvent.title}
                 onChange={(e) => setNewEvent({ 
-                  date: currentDate, // Use currently selected date
+                  date: currentDate, 
                   title: e.target.value 
                 })}
                 className="col-span-3"
@@ -256,6 +286,37 @@ export default function CookingCalendar() {
             </div>
           </div>
           <Button onClick={handleAddEvent} className="w-full">Add Event</Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Note Dialog */}
+      <Dialog open={isNoteOpen} onOpenChange={setIsNoteOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{selectedEvent?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label>Notes</Label>
+              <textarea 
+                className="min-h-[150px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" 
+                placeholder="Add your cooking notes here..."
+                value={selectedEvent?.notes || ''}
+                onChange={(e) => {
+                  if (selectedEvent) {
+                    const updatedEvents = events.map(ev => 
+                      (isSameDay(ev.date, selectedEvent.date) && ev.title === selectedEvent.title) 
+                        ? { ...ev, notes: e.target.value } 
+                        : ev
+                    );
+                    setEvents(updatedEvents);
+                    setSelectedEvent({ ...selectedEvent, notes: e.target.value });
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <Button onClick={() => setIsNoteOpen(false)}>Save & Close</Button>
         </DialogContent>
       </Dialog>
     </div>

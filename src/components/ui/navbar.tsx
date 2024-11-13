@@ -17,9 +17,9 @@ export function Navbar() {
 
   return (
     <nav className="bg-[#fffaed] border-b relative z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-0 pl-0"> 
+      <div className="w-full px-2">
+        <div className="flex h-16 items-center justify-between max-w-[1800px] mx-auto">
+          <div className="flex items-center gap-0 pl-0 sm:pl-1"> 
             <Link href="/">
               <Image
                 src="/logo.png"
@@ -44,8 +44,8 @@ export function Navbar() {
             )}
           </button>
 
-          {/* Desktop navigation */}
-          <div className="hidden lg:flex items-center gap-6">
+          {/* Reduce right padding */}
+          <div className="hidden lg:flex items-center gap-6 pr-0 sm:pr-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -61,7 +61,7 @@ export function Navbar() {
               aria-label="Go to profile"
             >
               <Image 
-                src="/profilelogo.png"
+                src="/profile.png"
                 alt="Profile"
                 width={40}
                 height={40}
@@ -92,7 +92,7 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <Image 
-                src="/profilelogo.png"
+                src="/profile.png"
                 alt="Profile"
                 width={32}
                 height={32}

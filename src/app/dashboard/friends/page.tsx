@@ -55,18 +55,6 @@ export default function FriendChat() {
     scrollToBottom()
   }, [messages, activeFriendId])
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsSidebarCollapsed(true)
-      }
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   const handleSendMessage = () => {
     if (!newMessage.trim()) return
 
@@ -100,7 +88,7 @@ export default function FriendChat() {
       {/* Friends Sidebar */}
       <div className={`transition-all duration-300 ease-in-out border-r flex flex-col ${
         isSidebarCollapsed ? 'w-20' : 'w-80'
-      } md:w-64`}>
+      }`}>
         <div className="p-4 border-b flex justify-between items-center">
           {!isSidebarCollapsed && (
             <div className="flex-1">
