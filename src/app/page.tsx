@@ -41,9 +41,9 @@ export default function Page() {
 
       {/* Mascot and Welcome Message */}
       <div className="pl-0 mb-4 sm:mb-6">
-        <div className="flex flex-col sm:flex-row-reverse items-center gap-4 sm:gap-10 sm:mr-44"> 
+        <div className="flex flex-col-reverse sm:flex-row-reverse items-center gap-8 sm:gap-10 sm:mr-44"> 
           {/* Mascot Image */}
-          <div className="relative w-48 h-48 sm:w-96 sm:h-96">
+          <div className="relative w-48 h-48 sm:w-96 sm:h-96 mb-8 sm:mb-0">
             <Image
               src="/homemascot.png"
               alt="Garnish Mascot"
@@ -54,8 +54,13 @@ export default function Page() {
 
           {/* Speech Bubble */}
           <div className="relative bg-[#f9e4a7] p-4 sm:p-6 rounded-3xl shadow-lg w-full sm:min-w-[400px]"> 
+            {/* Desktop speech bubble pointer */}
             <div className="hidden sm:block absolute right-0 top-1/2 translate-x-6 -translate-y-1/2"> 
               <div className="w-0 h-0 border-y-[15px] border-y-transparent border-l-[30px] border-l-[#f9e4a7]" /> 
+            </div>
+            {/* Mobile speech bubble pointer */}
+            <div className="sm:hidden absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full"> 
+              <div className="w-0 h-0 border-x-[15px] border-x-transparent border-t-[30px] border-t-[#f9e4a7]" /> 
             </div>
             <h1 className={`text-xl sm:text-[2.0rem] leading-relaxed ${magicRetro.className} text-center sm:text-left`}>
               Welcome Back,
