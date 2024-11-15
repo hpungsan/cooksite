@@ -245,10 +245,10 @@ export default function FeedPage() {
         onImageRemove={() => setDemoImagePreview(null)}
         onSubmit={handleCreatePost}
       />
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-[300px_1fr] gap-6 max-w-6xl mx-auto">
-          {/* Left Sidebar with New Post Creation */}
-          <aside className="sticky top-4 h-fit space-y-4">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 sm:gap-6 max-w-6xl mx-auto">
+          {/* Left Sidebar - Stack on mobile */}
+          <aside className="lg:sticky lg:top-4 h-fit space-y-4">
             <Card>
               <CardContent className="p-4">
                 <div className="space-y-3">
@@ -267,7 +267,7 @@ export default function FeedPage() {
                     </div>
                   </div>
                   <Button 
-                    className="w-full text-left justify-start text-muted-foreground bg-muted/50 hover:bg-muted"
+                    className="w-full text-left justify-start text-muted-foreground bg-muted/50 hover:bg-muted h-12 sm:h-10"
                     variant="ghost"
                     onClick={() => setIsPostModalOpen(true)}
                     aria-haspopup="dialog"
@@ -282,12 +282,10 @@ export default function FeedPage() {
               <CardContent className="p-4">
                 <div className="space-y-3">
                   <h3 className="font-semibold">Your Rewards</h3>
-                  
                   <div className="flex items-center gap-2">
                     <Trophy className="h-5 w-5 text-yellow-500" />
                     <span className="font-bold">3,142 points</span>
                   </div>
-
                   <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">Next available reward:</p>
                     <div className="flex items-center justify-between bg-muted/50 p-2 rounded-lg">
@@ -298,10 +296,9 @@ export default function FeedPage() {
                       <span className="text-xs text-muted-foreground">1,000 points</span>
                     </div>
                   </div>
-
                   <div className="mt-4">
                     <Link href="/dashboard/rewards">
-                      <Button variant="outline" className="w-full">
+                      <Button variant="outline" className="w-full h-12 sm:h-10">
                         View All Rewards
                       </Button>
                     </Link>
@@ -309,16 +306,24 @@ export default function FeedPage() {
                 </div>
               </CardContent>
             </Card>
+            <div className="relative w-full aspect-square mt-4 hidden ml-[-20px] lg:block">
+              <Image
+                src="/mascotv2.png"
+                alt="Garnish Mascot"
+                fill
+                className="object-contain"
+              />
+            </div>
           </aside>
 
           {/* Main Feed Content */}
           <div className="flex justify-center">
-            <div className="max-w-[720px] w-full space-y-6">
+            <div className="w-full max-w-[720px] space-y-4 sm:space-y-6">
               {posts.map((post) => (
                 <Card key={post.id} className="overflow-hidden">
                   <CardContent className="p-0">
                     {/* Author Header */}
-                    <div className="p-4 flex items-center space-x-3 border-b">
+                    <div className="p-3 sm:p-4 flex items-center space-x-3 border-b">
                       <div className="h-10 w-10 rounded-full overflow-hidden">
                         <Image
                           src={post.author.image}
@@ -334,7 +339,7 @@ export default function FeedPage() {
                           {post.timestamp}
                         </p>
                       </div>
-                      <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" className="h-12 w-12 sm:h-10 sm:w-10">
                         <Bookmark className="h-5 w-5" />
                       </Button>
                     </div>
@@ -346,22 +351,24 @@ export default function FeedPage() {
                         alt="Post image"
                         fill
                         className="object-cover"
+                        priority
                       />
                     </div>
 
                     {/* Actions */}
-                    <div className="p-4 border-b">
+                    <div className="p-3 sm:p-4 border-b">
                       <div className="flex items-center space-x-4">
                         <Button 
                           variant="ghost" 
-                          size="icon" 
+                          size="icon"
+                          className="h-12 w-12 sm:h-10 sm:w-10"
                           onClick={() => handleLike(post.id)}
                         >
                           <Heart 
                             className={`h-5 w-5 ${post.isLiked ? "fill-current text-red-500" : ""}`} 
                           />
                         </Button>
-                        <Button variant="ghost" size="icon">
+                        <Button variant="ghost" size="icon" className="h-12 w-12 sm:h-10 sm:w-10">
                           <MessageCircle className="h-5 w-5" />
                         </Button>
                       </div>
@@ -373,7 +380,7 @@ export default function FeedPage() {
                     </div>
 
                     {/* Caption */}
-                    <div className="p-4">
+                    <div className="p-3 sm:p-4">
                       <p className="text-sm">
                         <span className="font-semibold">{post.author.name}</span>{" "}
                         {post.content.text}
