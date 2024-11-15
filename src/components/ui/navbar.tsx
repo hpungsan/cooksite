@@ -57,16 +57,18 @@ export function Navbar() {
             ))}
             <Link
               href="/profile"
-              className="p-2 hover:text-primary transition-colors"
+              className="p-0.5 hover:text-primary transition-colors rounded-full bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400"
               aria-label="Go to profile"
             >
-              <Image 
-                src="/profile.png"
-                alt="Profile"
-                width={40}
-                height={40}
-                className="object-contain rounded-full"
-              />
+              <div className="p-0.5 rounded-full bg-[#fffaed]">
+                <Image 
+                  src="/profile.png"
+                  alt="Profile"
+                  width={40}
+                  height={40}
+                  className="object-contain rounded-full"
+                />
+              </div>
             </Link>
           </div>
         </div>
@@ -91,13 +93,17 @@ export function Navbar() {
               className="flex items-center gap-2 py-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Image 
-                src="/profile.png"
-                alt="Profile"
-                width={32}
-                height={32}
-                className="object-contain rounded-full"
-              />
+              <div className="p-0.5 rounded-full bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400">
+                <div className="p-0.5 rounded-full bg-[#fffaed]">
+                  <Image 
+                    src="/profile.png"
+                    alt="Profile"
+                    width={32}
+                    height={32}
+                    className="object-contain rounded-full"
+                  />
+                </div>
+              </div>
               <span className="text-sm font-medium">Profile</span>
             </Link>
           </div>

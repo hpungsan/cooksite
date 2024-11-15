@@ -71,6 +71,54 @@ export default function RewardsPage() {
             </CardFooter>
           </Card>
 
+          {/* Restaurant Partner Discount */}
+          <Card>
+            <CardHeader className="space-y-1">
+              <div className="flex justify-between items-start">
+                <CardTitle className="text-xl">Rolling Bowl Discount</CardTitle>
+                <Badge
+                  variant="secondary"
+                  className="bg-orange-100 text-orange-800"
+                >
+                  <Percent className="h-3 w-3 mr-1" />
+                  25% off
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Get 25% off at our partner restaurants
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">Redeem 2,000 points</Button>
+            </CardFooter>
+          </Card>
+
+          {/* Fine Dining Experience */}
+          <Card>
+            <CardHeader className="space-y-1">
+              <div className="flex justify-between items-start">
+                <CardTitle className="text-xl">Fine Dining Voucher</CardTitle>
+                <Badge
+                  variant="secondary"
+                  className="bg-purple-100 text-purple-800"
+                >
+                  <Users className="h-3 w-3 mr-1" />
+                  For Two
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                $50 voucher at selected fine dining restaurants
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button className="w-full">Redeem 3,000 points</Button>
+            </CardFooter>
+          </Card>
+
           {/* Locked Premium Reward */}
           <Card className="opacity-75">
             <CardHeader className="space-y-1">

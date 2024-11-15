@@ -161,7 +161,6 @@ export default function CookingCalendar() {
     )
   }
 
-  // Update the DayPicker modifiers to show note indicators
   const renderMonthlyView = () => (
     <div className="border rounded-lg p-6 bg-white">
       <DayPicker
